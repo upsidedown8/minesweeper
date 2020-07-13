@@ -1,0 +1,42 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        { // build a single file
+            "label": "C++ Build active file",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-obuild/${fileBasenameNoExtension}",
+                "${file}",
+                "-g",
+                "-O",
+                "-Wall"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        { // build src/main.cpp and include relevant files
+            "label": "C++ Build main file",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-obuild/main",
+                "-Iinclude",
+                "src/main.cpp",
+                "-lsfml-graphics",
+                "-lsfml-window",
+                "-lsfml-system",
+                "-g",
+                "-O",
+                "-Wall"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
