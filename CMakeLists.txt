@@ -9,16 +9,21 @@ include_directories(
     src/
 )
 
-set(
-    SRC_FILES
-    src/main.cpp
-    src/board.cpp
-    src/game.cpp
-    src/node.cpp
-)
+find_package(PkgConfig REQUIRED)
+set(SFML_USE_STATIC_STD_LIBS TRUE)
 
 add_executable(
-    minesweeper_exec
-    ${SRC_FILES}
+    minesweeper_gui
+    src/game/board.cpp
+    src/game/node.cpp
+    src/gui/gui.cpp
+    src/main_gui.cpp
 )
-
+target_link_libraries(
+    minesweeper_gui
+    sfml-system
+    sfml-window
+    sfml-graphics
+    sfml-network
+    sfml-audio
+)
