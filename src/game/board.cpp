@@ -11,6 +11,10 @@ void minesweeper::board::reveal_recursive(size_t posx, size_t posy) {
             if (!cell->get_visited()) {
                 cell->set_visited(true);
                 cell->set_display(true);
+                m_num_displayed++;
+
+                if (cell->get_mine())
+                    m_exploded_mine = true;
 
                 if (!cell->get_mine() && !cell->get_adj_count())
                     for (int dx = -1; dx <= 1; dx++)
@@ -33,6 +37,9 @@ void minesweeper::board::reset() {
     for (int y = 0; y < m_height; y++)
         for (int x = 0; x < m_width; x++)
             get_cell(x, y)->reset();
+    m_exploded_mine = false;
+    m_num_displayed = 0;
+    m_num_empty = m_width * m_height;
 }
 
 void minesweeper::board::init_board(int initialX, int initialY) {
@@ -49,6 +56,7 @@ void minesweeper::board::init_board(int initialX, int initialY) {
         if ((dx >= 3 || dy >= 3) && !get_cell(posx, posy)->get_mine()) {
             get_cell(posx, posy)->set_mine(true);
             numMines--;
+            m_num_empty--;
         }
     }
     
@@ -79,4 +87,11 @@ void minesweeper::board::reveal(size_t posx, size_t posy) {
         for (int x = 0; x < m_width; x++)
             get_cell(x, y)->set_visited(false);
     reveal_recursive(posx, posy);
+}
+
+bool minesweeper::board::all_mines_found() {
+    return m_num_displayed == m_num_empty;
+}
+bool minesweeper::board::mine_exploded() {
+    return m_exploded_mine;
 }

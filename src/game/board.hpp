@@ -10,6 +10,9 @@ private:
     size_t m_width, m_height;
     node *m_cells;
 
+    size_t m_num_empty, m_num_displayed;
+    bool m_exploded_mine;
+
     void reveal_recursive(size_t posx, size_t posy);
 
 public:
@@ -25,6 +28,9 @@ public:
     size_t get_height();
 
     void reveal(size_t posx, size_t posy);
+
+    bool all_mines_found();
+    bool mine_exploded();
 };
 
 }

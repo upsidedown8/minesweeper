@@ -106,7 +106,8 @@ void minesweeper::gui::start() {
                         // reveal adjacant
                         if (!cell->get_flag()) {
                             m_board->reveal(posx, posy);
-                            if (cell->get_mine())
+                            if (m_board->mine_exploded() ||
+                                m_board->all_mines_found())
                                 displayMines = true;
                         }
                     } else {
