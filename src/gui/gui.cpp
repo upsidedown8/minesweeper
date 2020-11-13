@@ -4,7 +4,7 @@ void minesweeper::gui::draw_board(sf::RenderWindow &window, bool showMines) {
     for (int y = 0; y < rows; y++) {
         for (int x = 0; x < cols; x++) {
             int px = x * width / rows;
-            int py = y * height / rows;
+            int py = y * height / cols;
 
             node *cell = m_board->get_cell(x, y);
             if (cell->get_display() || (cell->get_mine() && showMines)) {
@@ -33,11 +33,9 @@ void minesweeper::gui::draw_board(sf::RenderWindow &window, bool showMines) {
     }
 }
 void minesweeper::gui::scale_asset(sf::Sprite &asset) {
-    float cellDimSize = (float)width / rows;
-
     asset.setScale(sf::Vector2f(
-        cellDimSize / asset.getLocalBounds().width,
-        cellDimSize / asset.getLocalBounds().height
+        (float)width / rows / asset.getLocalBounds().width,
+        (float)height / cols / asset.getLocalBounds().height
     ));
 }
 
@@ -68,6 +66,7 @@ minesweeper::gui::gui(int w, int h, int rows, int cols) {
     }
 
     // scale assets
+    scale_asset(m_red);
     scale_asset(m_flag);
     scale_asset(m_mine);
     scale_asset(m_empty);

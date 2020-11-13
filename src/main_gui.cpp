@@ -1,7 +1,17 @@
 #include "gui/gui.hpp"
 
 int main(int argc, char const *argv[]) {
-    minesweeper::gui gui(1024, 1024, 16, 16);
+    int square_size = 48;
+
+    int rows = 16;
+    int cols = 16;
+
+    minesweeper::gui gui(
+        square_size * rows,
+        square_size * cols,
+        rows,
+        cols
+    );
 
     gui.start();
 
